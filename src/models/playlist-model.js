@@ -27,5 +27,16 @@ module.exports = {
 
         playlists.push(newPlaylist);
         return newPlaylist;
+    },
+
+    deletePlaylist(id){
+        const playlistIndex = playlists.findIndex(playlist => playlist.id === id);
+
+        if(playlistIndex === -1){
+            return null;
+        }
+
+        const removedPlaylist = playlists.splice(playlistIndex, 1);
+        return removedPlaylist;
     }
 }
