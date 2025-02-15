@@ -106,5 +106,25 @@ module.exports = {
 
         playlist.musics.push(newMusic);
         res.json(playlist);
+    },
+
+    //DELETE /api/playlists/:idPlaylist/removeMusic/:idMusic
+    removeMusic: (req, res) => {
+        const { idPlaylist, idMusic } = req.params;
+        
+        const playlist = playlistModel.getPlaylistById(idPlaylist);
+
+        if(!playlist){
+            return res.status(404).json({ message: "Playlist not found!" });
+        }
+
+        const musicIndex = playlist.musics.findIndex(music => music.id === idMusic);
+
+        if(musicIndex === -1){
+            return res.status(404).json({ message: "Music not found!" });
+        }
+
+        playlist.musics.splice(musicIndex, 1);
+        res.json(playlist);
     }
 }
